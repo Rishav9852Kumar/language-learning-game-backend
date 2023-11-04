@@ -5,7 +5,7 @@ npm run dev
 
 npx wrangler dev
 
-npx wrangler publish
+wrangler deploy
 
 npx wrangler deploy
 
