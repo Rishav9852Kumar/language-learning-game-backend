@@ -8,3 +8,5 @@ npx wrangler dev
 npx wrangler publish
 
 npx wrangler deploy
+
+User [https://language-learning-game-backend.rishavkumaraug20005212.workers.dev/user]

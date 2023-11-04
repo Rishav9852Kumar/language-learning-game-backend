@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@planetscale/database": "^1.11.0",
-    "itty-router": "^4.0.23"
+    "itty-router": "^4.0.23",
+    "joi": "^17.11.0"
   }
 }
