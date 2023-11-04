@@ -32,6 +32,12 @@ async function handleGetRequest(request, conn) {
 	const email = requestBody.email;
 	console.log(requestBody);
 	const data = await conn.execute('SELECT * FROM Users where UserEmail = ?; ',[email]);
+	if(data.rows.length === 0){
+		return new Response('User does not Exist', {
+			headers: { 'content-type': 'text/plain' },
+			status: 404, // Not Found
+		});
+	}
 	return new Response(JSON.stringify(data.rows), {
 		status: 200,
 		headers: {
@@ -42,6 +48,13 @@ async function handleGetRequest(request, conn) {
 // done working 
 async function handlePutRequest(request, conn) {
 	try {
+		const userExist = handleGetRequest(request, conn);
+		if(userExist.rows.length !== 0){
+			return new Response('User Already Exists', {
+				headers: { 'content-type': 'text/plain' },
+				status: 404, // Not Found
+			});
+		}
 		const requestBody = await request.json();
 		const newUser = {
 			name: requestBody.name,
