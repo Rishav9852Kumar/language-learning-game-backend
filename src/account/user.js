@@ -17,7 +17,7 @@ async function handleRequest(request, env) {
 			return handleGetRequest(request, conn);
 		case 'PUT':
 			return handlePutRequest(request, conn);
-		case 'Post':
+		case 'POST':
 			return handlePostRequest(request, conn);
 		case 'DELETE':
 			return handleDeleteRequest(request, conn);
@@ -121,7 +121,6 @@ async function handlePostRequest(request, conn) {
 	try {
 		const url = new URL(request.url);
 		const email = url.searchParams.get('email');
-		console.log(email);
 
 		// Check if the user already exists
 		const userExists = await conn.execute('SELECT * FROM Users WHERE UserEmail = ?;', [email]);
