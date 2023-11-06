@@ -17,6 +17,8 @@ async function handleRequest(request, env) {
 			return handleGetRequest(request, conn);
 		case 'PUT':
 			return handlePutRequest(request, conn);
+		case 'Post':
+			return handlePostRequest(request, conn);
 		case 'DELETE':
 			return handleDeleteRequest(request, conn);
 		default:
@@ -47,19 +49,80 @@ async function handleGetRequest(request, conn) {
 			},
 		});
 	}
-	return new Response(JSON.stringify(data.rows), {
+	const result = await conn.execute('SELECT * FROM Users WHERE UserEmail = ?;', [email]);
+
+	if (result.error) {
+		return new Response(data.error, {
+			headers: { 'content-type': 'text/plain' },
+			status: 404, // Not Found
+		});
+	}
+	return new Response(JSON.stringify(result.rows[0]), {
 		status: 200,
 		headers: {
 			'Content-Type': 'application/json',
 		},
 	});
 }
-// done working
+
 async function handlePutRequest(request, conn) {
+	try {
+		const url = new URL(request.url);
+		const userId = parseInt(url.searchParams.get('userId'));
+		const newName = url.searchParams.get('name') || "Guest"; // New name value
+
+		// Check if the user exists
+		const userExists = await conn.execute('SELECT * FROM Users WHERE UserId = ?;', [userId]);
+
+		if (userExists.rows.length === 0) {
+			return new Response('User does not Exist', {
+				headers: { 'content-type': 'text/plain' },
+				status: 404, // Not Found
+			});
+		}
+
+		// Update the user's name
+		const updateResult = await conn.execute('UPDATE Users SET UserName = ? WHERE UserId = ?;', [newName, userId]);
+
+		if (updateResult.error) {
+			return new Response(updateResult.error, {
+				headers: { 'content-type': 'text/plain' },
+				status: 500, // Internal Server Error
+			});
+		}
+
+		// Fetch and return the updated user data
+		const updatedUserData = await conn.execute('SELECT * FROM Users WHERE UserId = ?;', [userId]);
+
+		if (updatedUserData.error) {
+			return new Response(updatedUserData.error, {
+				headers: { 'content-type': 'text/plain' },
+				status: 500, // Internal Server Error
+			});
+		}
+
+		return new Response(JSON.stringify(updatedUserData.rows[0]), {
+			status: 200,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+	} catch (error) {
+		return new Response(error + '\n' + request, {
+			headers: { 'content-type': 'text-plain' },
+			status: 400, // Bad Request
+		});
+	}
+}
+
+// done working
+
+async function handlePostRequest(request, conn) {
 	try {
 		const url = new URL(request.url);
 		const email = url.searchParams.get('email');
 		console.log(email);
+
 		// Check if the user already exists
 		const userExists = await conn.execute('SELECT * FROM Users WHERE UserEmail = ?;', [email]);
 
@@ -90,16 +153,17 @@ async function handlePutRequest(request, conn) {
 			});
 		}
 
-		const result = await conn.execute('SELECT * FROM Users WHERE UserEmail = ?;', [newUser.email]);
+		// Fetch and return the inserted user data
+		const insertedUserData = await conn.execute('SELECT * FROM Users WHERE UserEmail = ?;', [newUser.email]);
 
-		if (result.error) {
-			return new Response(data.error, {
+		if (insertedUserData.error) {
+			return new Response(insertedUserData.error, {
 				headers: { 'content-type': 'text/plain' },
-				status: 404, // Not Found
+				status: 500, // Internal Server Error
 			});
 		}
 
-		return new Response(JSON.stringify(data.rows), {
+		return new Response(JSON.stringify(insertedUserData.rows[0]), {
 			status: 200,
 			headers: {
 				'Content-Type': 'application/json',
@@ -107,16 +171,18 @@ async function handlePutRequest(request, conn) {
 		});
 	} catch (error) {
 		return new Response(error + '\n' + request, {
-			headers: { 'content-type': 'text/plain' },
+			headers: { 'content-type': 'text-plain' },
 			status: 400, // Bad Request
 		});
 	}
 }
+
+
 // done checked
 async function handleDeleteRequest(request, conn) {
 	try {
-		const requestBody = await request.json();
-		const email = requestBody.email; // Assuming the client sends the ID of the fundraiser to delete
+		const url = new URL(request.url);
+		const email = url.searchParams.get('email');
 
 		// Check if the fundraiser with the given ID exists
 		const userExists = await conn.execute('SELECT * FROM Users where UserEmail = ?;', [email]);

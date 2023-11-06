@@ -1,15 +1,23 @@
 import { Router } from 'itty-router';
 import handleRequest from './account/user.js';
-import { handleRequest as handleEndpoint2 } from './score/endpoint2.js';
+import handleleaderBoardRequest from './account/leaderBoard.js';
 
 // Router
 const router = Router();
 
-// Account
+// User Routes
 router.get('/user', (request, env) => handleRequest(request,env));
 router.put('/user', (request, env) => handleRequest(request, env));
+router.post('/user', (request, env) => handleRequest(request, env));
 router.delete('/user', (request, env) => handleRequest(request, env));
-router.get('/api/endpoint2', (request,env) => handleEndpoint2(request));
+
+// Leaderboard Routes
+router.get('/leaderboard', (request, env) => handleleaderBoardRequest(request, env));
+router.put('/leaderboard', (request, env) => handleleaderBoardRequest(request, env));
+router.post('/leaderboard', (request, env) => handleleaderBoardRequest(request, env));
+router.delete('/leaderboard', (request, env) => handleleaderBoardRequest(request, env));
+
+router.get('/api/endpoint2', (request,env) => getLeaderboardBySubject(request));
 
 export default {
 	async fetch(request, env, ctx) {
