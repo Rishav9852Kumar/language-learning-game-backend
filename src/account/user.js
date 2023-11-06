@@ -76,7 +76,11 @@ async function handlePutRequest(request, conn) {
 
 		if (userExists.rows.length === 0) {
 			return new Response('User does not Exist', {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 404, // Not Found
 			});
 		}
@@ -86,7 +90,11 @@ async function handlePutRequest(request, conn) {
 
 		if (updateResult.error) {
 			return new Response(updateResult.error, {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 500, // Internal Server Error
 			});
 		}
@@ -96,7 +104,11 @@ async function handlePutRequest(request, conn) {
 
 		if (updatedUserData.error) {
 			return new Response(updatedUserData.error, {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 500, // Internal Server Error
 			});
 		}
@@ -105,11 +117,17 @@ async function handlePutRequest(request, conn) {
 			status: 200,
 			headers: {
 				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 			},
 		});
 	} catch (error) {
 		return new Response(error + '\n' + request, {
-			headers: { 'content-type': 'text-plain' },
+			headers: {
+				'content-type': 'text-plain',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+			},
 			status: 400, // Bad Request
 		});
 	}
@@ -127,7 +145,11 @@ async function handlePostRequest(request, conn) {
 
 		if (userExists.rows.length > 0) {
 			return new Response('User Already Exists', {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 404, // Not Found
 			});
 		}
@@ -147,7 +169,11 @@ async function handlePostRequest(request, conn) {
 
 		if (data.error) {
 			return new Response(data.error, {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 404, // Not Found
 			});
 		}
@@ -157,7 +183,11 @@ async function handlePostRequest(request, conn) {
 
 		if (insertedUserData.error) {
 			return new Response(insertedUserData.error, {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 500, // Internal Server Error
 			});
 		}
@@ -166,11 +196,17 @@ async function handlePostRequest(request, conn) {
 			status: 200,
 			headers: {
 				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 			},
 		});
 	} catch (error) {
 		return new Response(error + '\n' + request, {
-			headers: { 'content-type': 'text-plain' },
+			headers: {
+				'content-type': 'text-plain',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+			},
 			status: 400, // Bad Request
 		});
 	}
@@ -188,7 +224,11 @@ async function handleDeleteRequest(request, conn) {
 
 		if (userExists.rows.length === 0) {
 			return new Response('User does not Exist', {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 404, // Not Found
 			});
 		}
@@ -197,17 +237,29 @@ async function handleDeleteRequest(request, conn) {
 		const deleteResult = await conn.execute('DELETE FROM Users WHERE userEmail = ?;', [email]);
 		if (deleteResult.error) {
 			return new Response(data.error, {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 404, // Not Found
 			});
 		}
 		return new Response('User deleted', {
-			headers: { 'content-type': 'text/plain' },
+			headers: {
+				'content-type': 'text/plain',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+			},
 			status: 200, // OK
 		});
 	} catch (error) {
 		return new Response(error + '\n' + request, {
-			headers: { 'content-type': 'text/plain' },
+			headers: {
+				'content-type': 'text/plain',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+			},
 			status: 400, // Bad Request
 		});
 	}

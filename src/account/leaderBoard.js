@@ -58,7 +58,11 @@ async function handleGetLeaderboardRequest(request, conn) {
 		const subjectName = url.searchParams.get('subjectName');
 		if (!subjectName) {
 			return new Response(JSON.stringify('Subject not found ' + subjectName), {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 404, // Not Found
 			});
 		}
@@ -66,7 +70,11 @@ async function handleGetLeaderboardRequest(request, conn) {
 
 		if (!subjectId) {
 			return new Response(JSON.stringify('Unable to load leaderboard for  ' + subjectName), {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 404, // Not Found
 			});
 		}
@@ -79,7 +87,11 @@ async function handleGetLeaderboardRequest(request, conn) {
 
 		if (leaderboardData.error) {
 			return new Response(leaderboardData.error, {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 500, // Internal Server Error
 			});
 		}
@@ -88,11 +100,17 @@ async function handleGetLeaderboardRequest(request, conn) {
 			status: 200,
 			headers: {
 				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 			},
 		});
 	} catch (error) {
 		return new Response(error + '\n' + request, {
-			headers: { 'content-type': 'text/plain' },
+			headers: {
+				'content-type': 'text/plain',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+			},
 			status: 500, // Internal Server Error
 		});
 	}
@@ -110,7 +128,11 @@ async function handleDeleteLeaderboardRequest(request, conn) {
 
 		if (userExists.rows.length === 0) {
 			return new Response('User does not Exist', {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 404, // Not Found
 			});
 		}
@@ -120,7 +142,11 @@ async function handleDeleteLeaderboardRequest(request, conn) {
 
 		if (deleteResult.error) {
 			return new Response(deleteResult.error, {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 500, // Internal Server Error
 			});
 		}
@@ -129,11 +155,17 @@ async function handleDeleteLeaderboardRequest(request, conn) {
 			status: 200,
 			headers: {
 				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 			},
 		});
 	} catch (error) {
 		return new Response(error + '\n' + request, {
-			headers: { 'content-type': 'text/plain' },
+			headers: {
+				'content-type': 'text/plain',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+			},
 			status: 500, // Internal Server Error
 		});
 	}
@@ -153,7 +185,11 @@ async function handlePutLeaderboardRequest(request, conn) {
 
 		if (userExists.rows.length === 0) {
 			return new Response('User does not Exist', {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 404, // Not Found
 			});
 		}
@@ -166,7 +202,11 @@ async function handlePutLeaderboardRequest(request, conn) {
 
 		if (updateResult.error) {
 			return new Response(updateResult.error, {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 500, // Internal Server Error
 			});
 		}
@@ -175,7 +215,11 @@ async function handlePutLeaderboardRequest(request, conn) {
 
 		if (!updatedData) {
 			return new Response('User details not found after update', {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 500, // Internal Server Error
 			});
 		}
@@ -183,11 +227,17 @@ async function handlePutLeaderboardRequest(request, conn) {
 			status: 200,
 			headers: {
 				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 			},
 		});
 	} catch (error) {
 		return new Response(error + '\n' + request, {
-			headers: { 'content-type': 'text/plain' },
+			headers: {
+				'content-type': 'text/plain',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+			},
 			status: 500, // Internal Server Error
 		});
 	}
@@ -210,7 +260,11 @@ async function handlePostLeaderboardRequest(request, conn) {
 
 		if (insertResult.error) {
 			return new Response(insertResult.error, {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 500, // Internal Server Error
 			});
 		}
@@ -219,7 +273,11 @@ async function handlePostLeaderboardRequest(request, conn) {
 
 		if (!updatedData) {
 			return new Response('User details not found after update', {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 500, // Internal Server Error
 			});
 		}
@@ -227,11 +285,17 @@ async function handlePostLeaderboardRequest(request, conn) {
 			status: 200,
 			headers: {
 				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 			},
 		});
 	} catch (error) {
 		return new Response(error + '\n' + request, {
-			headers: { 'content-type': 'text/plain' },
+			headers: {
+				'content-type': 'text/plain',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+			},
 			status: 500, // Internal Server Error
 		});
 	}
