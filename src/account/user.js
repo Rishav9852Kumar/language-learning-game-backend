@@ -23,7 +23,11 @@ async function handleRequest(request, env) {
 			return handleDeleteRequest(request, conn);
 		default:
 			return new Response('Invalid request method', {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 400, // Bad Request
 			});
 	}
@@ -37,7 +41,11 @@ async function handleGetRequest(request, conn) {
 	const data = await conn.execute('SELECT * FROM Users where UserEmail = ?; ', [email]);
 	if (data.error) {
 		return new Response(data.error, {
-			headers: { 'content-type': 'text/plain' },
+			headers: {
+				'content-type': 'text/plain',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+			},
 			status: 404, // Not Found
 		});
 	}
@@ -46,6 +54,8 @@ async function handleGetRequest(request, conn) {
 			status: 404,
 			headers: {
 				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 			},
 		});
 	}
@@ -61,6 +71,8 @@ async function handleGetRequest(request, conn) {
 		status: 200,
 		headers: {
 			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 		},
 	});
 }
