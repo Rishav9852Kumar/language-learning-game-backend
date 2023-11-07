@@ -23,7 +23,11 @@ async function handleleaderBoardRequest(request, env) {
 			return handlePostLeaderboardRequest(request, conn);
 		default:
 			return new Response('Invalid request method', {
-				headers: { 'content-type': 'text/plain' },
+				headers: {
+					'content-type': 'text/plain',
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+				},
 				status: 400, // Bad Request
 			});
 	}

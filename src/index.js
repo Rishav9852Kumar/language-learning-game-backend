@@ -3,6 +3,7 @@ import handleRequest from './account/user.js';
 import handleleaderBoardRequest from './account/leaderBoard.js';
 import handleLanguageRequest from './subjects/subjectsList.js';
 import handleQuizQuestionsRequest from './questions/quizQuestions.js';
+import handleUserScoresRequest from './account/userSubjectsLists.js'
 
 // Router
 const router = Router();
@@ -27,6 +28,11 @@ router.post('/languages', (request, env) => handleLanguageRequest(request, env))
 router.get('/game/questions', (request, env) => handleQuizQuestionsRequest(request, env));
 router.post('/game/questions', (request, env) => handleQuizQuestionsRequest(request, env));
 
+// User Subject Scores Routes
+router.get('/user/languages', (request, env) => handleUserScoresRequest(request, env));
+router.post('/user/languages', (request, env) => handleUserScoresRequest(request, env));
+router.put('/user/languages', (request, env) => handleUserScoresRequest(request, env));
+router.delete('/user/languages', (request, env) => handleUserScoresRequest(request, env));
 
 router.get('/api/endpoint2', (request,env) => getLeaderboardBySubject(request));
 
