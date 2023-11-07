@@ -2,6 +2,7 @@ import { Router } from 'itty-router';
 import handleRequest from './account/user.js';
 import handleleaderBoardRequest from './account/leaderBoard.js';
 import handleLanguageRequest from './subjects/subjectsList.js';
+import handleQuizQuestionsRequest from './questions/quizQuestions.js';
 
 // Router
 const router = Router();
@@ -21,6 +22,11 @@ router.delete('/leaderboard', (request, env) => handleleaderBoardRequest(request
 // Language Lists Routes
 router.get('/languages', (request, env) => handleLanguageRequest(request, env));
 router.post('/languages', (request, env) => handleLanguageRequest(request, env));
+
+// Quiz Questions Routes
+router.get('/game/questions', (request, env) => handleQuizQuestionsRequest(request, env));
+router.post('/game/questions', (request, env) => handleQuizQuestionsRequest(request, env));
+
 
 router.get('/api/endpoint2', (request,env) => getLeaderboardBySubject(request));
 
