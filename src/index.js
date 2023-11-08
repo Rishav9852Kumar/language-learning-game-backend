@@ -4,6 +4,8 @@ import handleleaderBoardRequest from './account/leaderBoard.js';
 import handleLanguageRequest from './subjects/subjectsList.js';
 import handleQuizQuestionsRequest from './questions/quizQuestions.js';
 import handleUserScoresRequest from './account/userSubjectsLists.js'
+import handleGetUsersCountRequest from './account/admin/totalUserCount.js';
+import handleGetQuestionsCountRequest from './account/admin/totalQuestionsCount.js';
 
 // Router
 const router = Router();
@@ -34,7 +36,9 @@ router.post('/user/languages', (request, env) => handleUserScoresRequest(request
 router.put('/user/languages', (request, env) => handleUserScoresRequest(request, env));
 router.delete('/user/languages', (request, env) => handleUserScoresRequest(request, env));
 
-router.get('/api/endpoint2', (request,env) => getLeaderboardBySubject(request));
+// Admin Routes
+router.get('/admin/totalUsers', (request, env) => handleGetUsersCountRequest(request, env));
+router.get('/admin/totalQuestions', (request, env) => handleGetQuestionsCountRequest(request, env));
 
 export default {
 	async fetch(request, env, ctx) {
