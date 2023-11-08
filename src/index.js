@@ -6,6 +6,7 @@ import handleQuizQuestionsRequest from './questions/quizQuestions.js';
 import handleUserScoresRequest from './account/userSubjectsLists.js'
 import handleGetUsersCountRequest from './account/admin/totalUserCount.js';
 import handleGetQuestionsCountRequest from './account/admin/totalQuestionsCount.js';
+import handleUpdateUserScoreRequest from './account/game/userScore.js';
 
 // Router
 const router = Router();
@@ -39,6 +40,9 @@ router.delete('/user/languages', (request, env) => handleUserScoresRequest(reque
 // Admin Routes
 router.get('/admin/totalUsers', (request, env) => handleGetUsersCountRequest(request, env));
 router.get('/admin/totalQuestions', (request, env) => handleGetQuestionsCountRequest(request, env));
+
+// user score Routes
+router.post('/game/userScore', (request, env) => handleUpdateUserScoreRequest(request, env));
 
 export default {
 	async fetch(request, env, ctx) {
